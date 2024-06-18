@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        #myInput {
+            background-image: url('./searchicon.png');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
+
+        #myUL {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #myUL li {
+            border: 1px solid #ddd;
+            margin-top: -1px;
+            /* Prevent double borders */
+            background-color: #f6f6f6;
+            padding: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            color: black;
+            display: block
+        }
+
+        #myUL li:hover:not(.header) {
+            background-color: #eee;
+        }
+
+        /* The Modal (background) */
+        .modal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.9);
+            /* Black w/ opacity */
+        }
+
+        /* Modal Content (image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+
+        /* Caption of Modal Image */
+        #caption {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+            height: 150px;
+        }
+
+        /* Add Animation */
+        .modal-content,
+        #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        @-webkit-keyframes zoom {
+            from {
+                -webkit-transform: scale(0)
+            }
+
+            to {
+                -webkit-transform: scale(1)
+            }
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0)
+            }
+
+            to {
+                transform: scale(1)
+            }
+        }
+
+        /* The Close Button */
+        #close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        #close:hover,
+        #close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px) {
+            .modal-content {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>[회원검색] 32 칭구들 by 강석</h2>
+
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+    <ul id="myUL">
+        <li>15_강정자.png</li>
+        <li>15_강정희.png</li>
+        <li>15_강향주.png</li>
+        <li>15_고계선.png</li>
+        <li>15_고미자.png</li>
+        <li>15_고연희.png</li>
+        <li>15_고은희.png</li>
+        <li>16_고향실.png</li>
+        <li>16_김경미.png</li>
+        <li>16_김경선.png</li>
+        <li>16_김금미.png</li>
+        <li>16_김난심.png</li>
+        <li>16_김명복.png</li>
+        <li>16_김명숙.png</li>
+        <li>17_김미순.png</li>
+        <li>17_김복심.png</li>
+        <li>17_김애란.png</li>
+        <li>17_김양춘.png</li>
+        <li>17_김영숙.png</li>
+        <li>17_김옥숙.png</li>
+        <li>17_김운주.png</li>
+        <li>18_김윤희.png</li>
+        <li>18_김정숙.png</li>
+        <li>18_김지연.png</li>
+        <li>18_김화생.png</li>
+        <li>18_문정춘.png</li>
+        <li>18_부경숙.png</li>
+        <li>18_부정민.png</li>
+        <li>19_부춘화.png</li>
+        <li>19_오석화.png</li>
+        <li>19_오인숙.png</li>
+        <li>19_우혜양.png</li>
+        <li>19_원정희.png</li>
+        <li>19_윤경숙.png</li>
+        <li>19_이경희.png</li>
+        <li>20_이희경.png</li>
+        <li>20_임성숙.png</li>
+        <li>20_한명자.png</li>
+        <li>20_한선희.png</li>
+        <li>20_한진희.png</li>
+        <li>20_허미자.png</li>
+        <li>21_현양금.png</li>
+        <li>21_현월매.png</li>
+        <li>21_현춘숙.png</li>
+        <li>21_홍경애.png</li>
+        <li>21_홍명복.png</li>
+        <li>21_홍연숙.png</li>
+        <li>23_강경옥.png</li>
+        <li>23_강순지.png</li>
+        <li>23_강옥영.png</li>
+        <li>23_고은희.png</li>
+        <li>23_고희경.png</li>
+        <li>23_권용경.png</li>
+        <li>23_김경미.png</li>
+        <li>24_김경애.png</li>
+        <li>24_김경옥.png</li>
+        <li>24_김경희.png</li>
+        <li>24_김미리.png</li>
+        <li>24_김미정.png</li>
+        <li>24_김미희.png</li>
+        <li>24_김병숙.png</li>
+        <li>25_김복희.png</li>
+        <li>25_김양미.png</li>
+        <li>25_김영미.png</li>
+        <li>25_김은정.png</li>
+        <li>25_김정희.png</li>
+        <li>25_김지향.png</li>
+        <li>25_김현미.png</li>
+        <li>26_김형미.png</li>
+        <li>26_김호순.png</li>
+        <li>26_김희정.png</li>
+        <li>26_노미경.png</li>
+        <li>26_부숙희.png</li>
+        <li>26_부순애.png</li>
+        <li>26_부윤생.png</li>
+        <li>27_오생.png</li>
+        <li>27_송금례.png</li>
+        <li>27_송현숙.png</li>
+        <li>27_양경림.png</li>
+        <li>27_오동화.png</li>
+        <li>27_윤미숙.png</li>
+        <li>27_윤미영.png</li>
+        <li>28_원정미.png</li>
+        <li>28_윤현미.png</li>
+        <li>28_이은미.png</li>
+        <li>28_임수향.png</li>
+        <li>28_임혜란.png</li>
+        <li>28_정미선.png</li>
+        <li>28_정순옥.png</li>
+        <li>29_채안미.png</li>
+        <li>29_최미영.png</li>
+        <li>29_한예선.png</li>
+        <li>29_현영숙.png</li>
+        <li>29_현윤향.png</li>
+        <li>29_황우정.png</li>
+        <li>31_강옥렬.png</li>
+        <li>31_강원자.png</li>
+        <li>31_강정미.png</li>
+        <li>31_강춘실.png</li>
+        <li>31_고경옥.png</li>
+        <li>31_고경은.png</li>
+        <li>31_고미경.png</li>
+        <li>32_고선일.png</li>
+        <li>32_고영산.png</li>
+        <li>32_고옥녀.png</li>
+        <li>32_고평옥.png</li>
+        <li>32_김경미.png</li>
+        <li>32_김명실.png</li>
+        <li>32_김미영.png</li>
+        <li>33_김봉희.png</li>
+        <li>33_김양희.png</li>
+        <li>33_김은숙.png</li>
+        <li>33_김인실.png</li>
+        <li>33_김정애.png</li>
+        <li>33_김진희.png</li>
+        <li>33_박미양.png</li>
+        <li>34_백복화.png</li>
+        <li>34_부영실.png</li>
+        <li>34_부혜영.png</li>
+        <li>34_부혜자.png</li>
+        <li>34_서영복.png</li>
+        <li>34_송명춘.png</li>
+        <li>34_안영희.png</li>
+        <li>35_양연실.png</li>
+        <li>35_오경숙.png</li>
+        <li>35_오성아.png</li>
+        <li>35_오인숙.png</li>
+        <li>35_윤연숙.png</li>
+        <li>35_이경선.png</li>
+        <li>35_이태희.png</li>
+        <li>36_임수선.png</li>
+        <li>36_정미숙.png</li>
+        <li>36_정민아.png</li>
+        <li>36_정선화.png</li>
+        <li>36_정해일.png</li>
+        <li>36_최순애.png</li>
+        <li>37_한희선.png</li>
+        <li>37_허은영.png</li>
+        <li>37_허은정.png</li>
+        <li>37_현명희.png</li>
+        <li>37_현애금.png</li>
+        <li>37_홍순자.png</li>
+        <li>39_고경무.png</li>
+        <li>39_고상형.png</li>
+        <li>39_고홍업.png</li>
+        <li>39_곽복현.png</li>
+        <li>39_권형보.png</li>
+        <li>39_김광수.png</li>
+        <li>39_김규식.png</li>
+        <li>40_이정남.png</li>
+        <li>40_임종철.png</li>
+        <li>40_임진호.png</li>
+        <li>40_전기훈.png</li>
+        <li>40_정세영.png</li>
+        <li>40_정태규.png</li>
+        <li>40_한동석.png</li>
+        <li>40_한동현.png</li>
+        <li>41_김기용.png</li>
+        <li>41_김동철.png</li>
+        <li>41_김동흡.png</li>
+        <li>41_김봉현.png</li>
+        <li>41_김성일.png</li>
+        <li>41_김성호.png</li>
+        <li>41_김완진.png</li>
+        <li>42_박선호.png</li>
+        <li>42_부두정.png</li>
+        <li>42_부상근.png</li>
+        <li>42_송승관.png</li>
+        <li>42_신수현.png</li>
+        <li>42_오경도.png</li>
+        <li>42_오용철.png</li>
+        <li>43_강두선.png</li>
+        <li>43_강문홍.png</li>
+        <li>43_강상철.png</li>
+        <li>43_강영석.png</li>
+        <li>43_강정철.png</li>
+        <li>43_강태욱.png</li>
+        <li>43_강호성.png</li>
+        <li>44_오재복.png</li>
+        <li>44_오종훈.png</li>
+        <li>44_원경환.png</li>
+        <li>44_원동숙.png</li>
+        <li>44_위영석.png</li>
+        <li>44_윤경호.png</li>
+        <li>44_윤승일.png</li>
+        <li>44_윤형식.png</li>
+        <li>45_김용완.png</li>
+        <li>45_김윤석.png</li>
+        <li>45_김종국.png</li>
+        <li>45_김철희.png</li>
+        <li>45_김환수.png</li>
+        <li>45_문광원.png</li>
+        <li>45_박명길.png</li>
+        <li>47_강창헌.png</li>
+        <li>47_강태보.png</li>
+        <li>47_강현찬.png</li>
+        <li>47_강희종.png</li>
+        <li>47_고광범.png</li>
+        <li>47_고기복.png</li>
+        <li>47_고병식.png</li>
+        <li>48_고복성.png</li>
+        <li>48_고상규.png</li>
+        <li>48_고재호.png</li>
+        <li>48_고철호.png</li>
+        <li>48_고형종.png</li>
+        <li>48_김두우.png</li>
+        <li>48_김명진.png</li>
+        <li>49_김상구.png</li>
+        <li>49_김승룡.png</li>
+        <li>49_김운철.png</li>
+        <li>49_김종범.png</li>
+        <li>49_김현수.png</li>
+        <li>49_박길만.png</li>
+        <li>49_박태진.png</li>
+        <li>50_부지철.png</li>
+        <li>50_신만균.png</li>
+        <li>50_양명진.png</li>
+        <li>50_오명훈.png</li>
+        <li>50_오상훈.png</li>
+        <li>50_오재현.png</li>
+        <li>50_함홍탁.png</li>
+        <li>51_정관.png</li>
+        <li>51_윤두성.png</li>
+        <li>51_이경훈.png</li>
+        <li>51_이광림.png</li>
+        <li>51_이상범.png</li>
+        <li>51_이종관.png</li>
+        <li>51_임인홍.png</li>
+        <li>52_정성실.png</li>
+        <li>52_정승언.png</li>
+        <li>52_정인웅.png</li>
+        <li>52_조경태.png</li>
+        <li>52_한병선.png</li>
+        <li>52_한정훈.png</li>
+        <li>52_한평건.png</li>
+        <li>53_송권욱.png</li>
+        <li>53_현동수.png</li>
+        <li>53_현승헌.png</li>
+        <li>53_현의관.png</li>
+        <li>53_홍근찬.png</li>
+        <li>53_홍병철.png</li>
+        <li>53_홍원혁.png</li>
+        <li>53_홍인표.png</li>
+        <li>55_고승조.png</li>
+        <li>55_김남홍.png</li>
+        <li>55_김봉석.png</li>
+        <li>55_김용호.png</li>
+        <li>55_김학현.png</li>
+        <li>55_김현철.png</li>
+        <li>55_송주영.png</li>
+        <li>56_고용석.png</li>
+        <li>56_고희주.png</li>
+        <li>56_김봉균.png</li>
+        <li>56_김영신.png</li>
+        <li>56_김재휘.png</li>
+        <li>56_김정근.png</li>
+        <li>56_김현준.png</li>
+        <li>56_현승훈.png</li>
+        <li>57_김명현.png</li>
+        <li>57_김성근.png</li>
+        <li>57_김택상.png</li>
+        <li>57_부한성.png</li>
+        <li>57_오일준.png</li>
+        <li>57_이영민.png</li>
+        <li>57_조상욱.png</li>
+        <li>57_한재권.png</li>
+        <li>58_강기철.png</li>
+        <li>58_고용오.png</li>
+        <li>58_김민호.png</li>
+        <li>58_김승준.png</li>
+        <li>58_김영일.png</li>
+        <li>58_박찬희.png</li>
+        <li>58_오영배.png</li>
+        <li>58_하성현.png</li>
+        <li>59_강상우.png</li>
+        <li>59_고창수.png</li>
+        <li>59_김근영.png</li>
+        <li>59_김승찬.png</li>
+        <li>59_김항석.png</li>
+        <li>59_부수붕.png</li>
+        <li>59_오영종.png</li>
+        <li>59_이영준.png</li>
+        <li>60_고춘식.png</li>
+        <li>60_김승집.png</li>
+        <li>60_문유훈.png</li>
+        <li>60_박형준.png</li>
+        <li>60_오용호.png</li>
+        <li>60_오인철.png</li>
+        <li>60_우윤관.png</li>
+        <li>60_이우철.png</li>
+        <li>61_김정.png</li>
+        <li>61_권승주.png</li>
+        <li>61_김문식.png</li>
+        <li>61_김상범.png</li>
+        <li>61_김철남.png</li>
+        <li>61_김후성.png</li>
+        <li>61_부창만.png</li>
+        <li>61_장진영.png</li>
+        <li>63_강석.png</li>
+        <li>63_고영일.png</li>
+        <li>63_김순길.png</li>
+        <li>63_부성희.png</li>
+        <li>63_오만탁.png</li>
+        <li>63_허성단.png</li>
+        <li>63_홍상배.png</li>
+        <li>64_박성현.png</li>
+        <li>64_오성률.png</li>
+        <li>64_이동익.png</li>
+        <li>64_정석희.png</li>
+        <li>64_정재원.png</li>
+        <li>64_한맹순.png</li>
+        <li>64_현재창.png</li>
+        <li>65_강연숙.png</li>
+        <li>65_김병균.png</li>
+        <li>65_원혜경.png</li>
+        <li>65_임수길.png</li>
+        <li>65_허문준.png</li>
+        <li>65_홍근덕.png</li>
+        <li>66_고희지.png</li>
+        <li>66_김정희.png</li>
+        <li>66_박영옥.png</li>
+        <li>66_안지철.png</li>
+        <li>66_현상훈.png</li>
+        <li>66_홍희정.png</li>
+        <li>67_강미숙.png</li>
+        <li>67_강상철.png</li>
+        <li>67_김영훈.png</li>
+        <li>67_김은주.png</li>
+        <li>67_김창종.png</li>
+        <li>67_오영희.png</li>
+        <li>67_정정희.png</li>
+        <li>68_강훈.png</li>
+        <li>68_강정만.png</li>
+        <li>68_고호철.png</li>
+        <li>68_김미선.png</li>
+        <li>68_오대욱.png</li>
+        <li>68_이영선.png</li>
+        <li>68_현미경.png</li>
+        <li>69_강덕희.png</li>
+        <li>69_강민범.png</li>
+        <li>69_권애경.png</li>
+        <li>69_김민자.png</li>
+        <li>69_양경돈.png</li>
+        <li>69_윤영문.png</li>
+        <li>70_강원정.png</li>
+        <li>70_강창호.png</li>
+        <li>70_강홍경.png</li>
+        <li>70_김진연.png</li>
+        <li>70_김철암.png</li>
+        <li>70_한오심.png</li>
+        <li>71_강정희.png</li>
+        <li>71_고호경.png</li>
+        <li>71_김민형.png</li>
+        <li>71_김양범.png</li>
+        <li>71_김재수.png</li>
+        <li>71_이송의.png</li>
+        <li>71_현미라.png</li>        
+    </ul>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+        <span id="close">&times;</span>
+        <img class="modal-content" id="img01">
+        <!-- <div id="caption"></div> -->
+    </div>
+
+<!--
+    <hr>
+    <img id="myImg" src="images/01_졸업기념_33_1983.png" style="width:100%;max-width:300px">
+    <img id="myImg" src="images/06_김윤견.png" style="width:100%;max-width:300px">
+-->
+
+
+    <script>
+        function myFunction() {
+            var input, filter, ul, li, a, i, txtValue;
+            input = document.getElementById("myInput");
+            //filter = input.value.toUpperCase();
+            filter = input.value;
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            for (i = 0; i < li.length; i++) {
+                // a = li[i].getElementsByTagName("a")[0];
+                txtValue = li[i].innerText;
+                // if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                if (txtValue.indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+
+        // Get the modal
+        
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        //var img = document.getElementById("myImg");
+        // var captionText = document.getElementById("caption");
+        //img.onclick = function () {
+        //    modal.style.display = "block";
+        //    modalImg.src = this.src;
+        //    captionText.innerHTML = this.alt;
+        //}
+        
+        // KANG
+        var modal = document.getElementById("myModal");
+        var modalImg = document.getElementById("img01");
+
+        function func_initialize() {
+            ul = document.getElementById("myUL");
+            li = ul.getElementsByTagName("li");
+            for (i = 0; i < li.length; i++) {
+                li[i].onclick = function() {
+                    // alert(this.innerText)
+                    modal.style.display = "block";
+                    modalImg.src = "./images/" + this.innerText
+                }
+                // a = li[i].getElementsByTagName("a")[0];
+                // txtValue = a.textContent || a.innerText;
+                // if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                // if (txtValue.indexOf(filter) > -1) {
+                //    li[i].style.display = "";
+                //} else {
+                //    li[i].style.display = "none";
+                //}
+            }
+        }
+        func_initialize()
+
+        //var li_items = document.getElementsByClassName("item");
+        //li_items.onclick = function() {
+        //    // alert(element.innerText)
+        //    modal.style.display = "block";
+        //    modalImg.src = "./images/" + this.innerText;
+        //}
+        
+        var span = document.getElementById("close");
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+    </script>
+
+</body>
+
+</html>
